@@ -1,7 +1,6 @@
 const app = require('./app');
 const server = require('http').Server(app)
-const config = require('./config/config');
-
+const config = require('./config/config')
 const port = config.app.PORT || 3030
 
 
