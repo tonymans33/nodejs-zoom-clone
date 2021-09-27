@@ -19,6 +19,7 @@ server.listen(port, () => {
     console.log(`Application is running on http://localhost:${port}`);
 });
 
+app.get('/favicon.ico', (req, res) => res.status(204));
 app.use('/peerjs', peerServer)
 
 io.on('connection', socket => {
