@@ -9,6 +9,6 @@ app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
-app.use("/api", apiRouter);
+app.use("/", apiRouter);
 
 module.exports = app;
