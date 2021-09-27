@@ -1,5 +1,5 @@
 console.log('workinggg')
-const socket  = io('localhost:3030/api/');
+const socket  = io();
 
 const myVideoGridElemnt = document.getElementById('video-grid');
 const myVideo = document.createElement('video');
