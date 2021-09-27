@@ -1,7 +1,7 @@
 const config = {
 
     app : {
-        PORT: 3030,
+        PORT: process.env.PORT || 3030,
     },
 
 }
