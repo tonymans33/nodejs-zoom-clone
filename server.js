@@ -3,7 +3,10 @@ const server = require('http').Server(app)
 const config = require('./config/config')
 const port = config.app.PORT || 3030
 const io = require('socket.io')(server)
-
+const { ExpressPeerServer } = require('peer')
+const peerServer = ExpressPeerServer(server, {
+    debug: true
+})
 
 process.on('uncaughtException', err => {
     console.log('UNCAUGHT EXCEPTION!!! shutting down...');
@@ -16,11 +19,16 @@ server.listen(port, () => {
     console.log(`Application is running on http://localhost:${port}`);
 });
 
+app.use('/peerjs', peerServer)
 
 io.on('connection', socket => {
-    socket.on('join-room', (roomId) => {
+    socket.on('join-room', (roomId, userId) => {
         socket.join(roomId);
-        socket.broadcast.to(roomId).emit('user-connected');
+        socket.broadcast.to(roomId).emit('user-connected', userId);
+
+        socket.on('message', message => {
+            io.to(roomId).emit('createMessage', message)
+        })
     })
 
 })
