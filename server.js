@@ -2,6 +2,7 @@ const app = require('./app');
 const server = require('http').Server(app)
 const config = require('./config/config')
 const port = config.app.PORT || 3030
+const io = require('socket.io')(server)
 
 
 process.on('uncaughtException', err => {
@@ -14,6 +15,15 @@ process.on('uncaughtException', err => {
 server.listen(port, () => {
     console.log(`Application is running on http://localhost:${port}`);
 });
+
+
+io.on('connection', socket => {
+    socket.on('join-room', (roomId) => {
+        socket.join(roomId);
+        socket.to(roomId).broadcast.emit('user-connected');
+    })
+
+})
 
 process.on('unhandledRejection', err => {
     console.log('UNHANDLED REJECTION!!!  shutting down ...');
