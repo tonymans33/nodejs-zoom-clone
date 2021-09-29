@@ -1,9 +1,10 @@
-const app = require('./app');
 const server = require('http').Server(app)
-const config = require('./config/config')
-const port = config.app.PORT || 3030
 const io = require('socket.io')(server)
 const { ExpressPeerServer } = require('peer')
+
+const app = require('./app');
+const config = require('./config/config')
+
 const peerServer = ExpressPeerServer(server, {
     debug: true
 })
@@ -14,7 +15,7 @@ process.on('uncaughtException', err => {
     process.exit(1);
 });
 
-
+const port = config.app.PORT || 3030
 server.listen(port, () => {
     console.log(`Application is running on http://localhost:${port}`);
 });

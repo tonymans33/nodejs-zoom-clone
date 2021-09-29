@@ -47,14 +47,14 @@ navigator.mediaDevices.getUserMedia({
 
 });
 
-socket.on('user-disconnected', userId => {
+socket.on('user-disconnected', userId =>{
   if (peer[userId]) peer[userId].close()
 })
 
 peer.on('open', id => {
     socket.emit('join-room', ROOM_ID, id);
 
-})
+}) 
 
 function connectToNewUser(userId, stream){
     const call = peer.call(userId, stream)
